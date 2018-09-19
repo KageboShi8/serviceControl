@@ -1,0 +1,83 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  package="jp.co.cyberagent.stf">
+
+  <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+  <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  <uses-permission
+    android:name="android.permission.DUMP"
+    tools:ignore="ProtectedPermissions" />
+
+  <application
+    android:allowBackup="true"
+    android:icon="@drawable/ic_launcher"
+    android:label="@string/app_name"
+    android:persistent="true">
+
+    <meta-data
+      android:name="android.max_aspect"
+      android:value="3.0" />
+
+    <service
+      android:name=".Service"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="jp.co.cyberagent.stf.ACTION_START" />
+        <action android:name="jp.co.cyberagent.stf.ACTION_STOP" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </service>
+
+    <service
+      android:name=".MyService"
+      android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+      <intent-filter>
+        <action android:name="android.service.notification.NotificationListenerService" />
+      </intent-filter>
+    </service>
+
+    <receiver android:name=".monitor.RotationMonitor$WeChatReceiver">
+      <intent-filter>
+        <action android:name="jp.co.cyberagent.stf.receiver" />
+      </intent-filter>
+    </receiver>
+
+    <activity
+      android:name=".IdentityActivity"
+      android:excludeFromRecents="true"
+      android:exported="true"
+      android:finishOnTaskLaunch="true"
+      android:noHistory="true"
+      android:stateNotNeeded="true">
+      <intent-filter>
+        <action android:name="jp.co.cyberagent.stf.ACTION_IDENTIFY" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
+
+    <activity
+      android:name=".IconActivity"
+      android:excludeFromRecents="true"
+      android:exported="true"
+      android:finishOnTaskLaunch="true"
+      android:noHistory="true"
+      android:stateNotNeeded="true">
+      <intent-filter>
+        <action android:name="jp.co.cyberagent.stf.ACTION_ICON" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:scheme="package" />
+      </intent-filter>
+    </activity>
+
+  </application>
+
+</manifest>
